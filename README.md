@@ -1,4 +1,4 @@
-# AI Research Assistant (MERN + OpenAI)
+# AI Research Assistant
 
 Asistente de investigación académica desarrollado con **MERN stack** (MongoDB, Express.js, React.js, Node.js) e integración de **Inteligencia Artificial** (OpenAI API / Hugging Face).  
 El sistema permite gestionar proyectos de investigación de manera colaborativa, automatizar búsquedas bibliográficas y generar resúmenes automáticos de papers.  
@@ -10,7 +10,7 @@ El sistema permite gestionar proyectos de investigación de manera colaborativa,
 - **Backend:** Node.js + Express.js (API REST).  
 - **Base de datos:** MongoDB Atlas.  
 - **IA:**  
-  - Chatbot académico (OpenAI API / Hugging Face).  
+  - Chatbot académico (Gemini IA API / Hugging Face).  
   - Resumen automático de papers con NLP.  
 - **Automatización:** Flujos con n8n (búsqueda → descarga → notificación → resumen).  
 - **Seguridad:** Autenticación con JWT y gestión de roles.  
@@ -24,5 +24,5 @@ El sistema permite gestionar proyectos de investigación de manera colaborativa,
 flowchart LR
   A[Frontend: React.js] --> B[Backend: Node.js + Express.js]
   B --> C[MongoDB Atlas]
-  B --> D[IA: OpenAI API / Hugging Face]
+  B --> D[IA: Gemini IA API / Hugging Face]
   B --> E[Automatización n8n]
