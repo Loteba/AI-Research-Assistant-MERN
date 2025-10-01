@@ -1,0 +1,208 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.dashboard-header h1 {
+  margin: 0;
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-size: 2rem;
+}
+.new-project-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.new-project-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-grid.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+.summarizer-widget {
+  grid-column: 1 / -1;
+}
+@media (min-width: 992px) {
+  .summarizer-widget {
+    grid-column: auto;
+  }
+}
+@media (min-width: 1200px) {
+  .dashboard-grid.overview-grid {
+    grid-template-columns: 1fr 1fr 2fr;
+  }
+  .summarizer-widget {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+  }
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.stat-icon {
+  color: var(--primary-color);
+  opacity: 0.7;
+}
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+.stat-label {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+.actions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.action-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  text-decoration: none;
+  color: var(--dark-color);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: none;
+  width: 100%;
+  font-size: 1rem;
+  text-align: left;
+}
+.action-link:hover {
+  background-color: #f8f9fa;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.action-link.placeholder {
+  color: #95a5a6;
+  cursor: not-allowed;
+}
+.action-link.placeholder:hover {
+  background-color: transparent;
+  border-color: var(--border-color);
+}
+
+.project-list-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 1200px) {
+  .project-list-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.no-projects-msg {
+  background-color: var(--light-color);
+  border: 1px dashed var(--border-color);
+  padding: 3rem;
+  text-align: center;
+  border-radius: 8px;
+  color: #777;
+}
+.no-projects-msg h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.back-link:hover {
+  color: var(--primary-color);
+}
+
+.new-task-form {
+  display: flex;
+  gap: 1rem;
+}
+.new-task-form input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+.new-task-form button {
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.task-list li:last-child {
+  border-bottom: none;
+}
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.status.pendiente { background-color: #f1c40f; color: #333; }
+.status.en.progreso { background-color: var(--primary-color); color: white; }
+.status.completada { background-color: var(--success-color); color: white; }
+
+/* Ajusta esta regla para el nuevo widget */
+@media (min-width: 1200px) {
+  /* ... */
+  .suggester-widget {
+    grid-column: 1 / -1; /* Ocupa todo el ancho en una nueva fila */
+  }
+}
+
+/* --- Estilos para el Wrapper del Link del Proyecto --- */
+.project-link-wrapper {
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  color: inherit; /* Hace que el texto herede el color de su contenedor (generalmente negro o gris oscuro) */
+  display: block; /* Asegura que el enlace ocupe todo el espacio de la tarjeta */
+}

@@ -1,0 +1,26 @@
+.dashboard-container {
+  display: flex;
+  padding-top: 60px;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 2rem;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .sidebar-nav {
+    /* Opcional: convertir en menú hamburguesa en el futuro */
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+  .dashboard-content {
+    margin-left: 0;
+  }
+}

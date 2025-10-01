@@ -1,0 +1,98 @@
+.suggester-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.suggester-form .search-input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* --- NUEVOS ESTILOS --- */
+.suggester-form .year-select {
+  padding: 0 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: white;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.suggester-form button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0 1.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.article-results {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem; /* Espacio para la barra de scroll */
+}
+
+.article-item {
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 0;
+}
+
+.article-item:first-child { 
+  border-top: none;
+  padding-top: 0;
+}
+
+.article-item h4 { 
+  margin: 0 0 0.25rem 0; 
+  color: var(--secondary-color);
+}
+
+.article-item .authors { 
+  font-size: 0.8rem; 
+  color: #777; 
+  margin: 0 0 0.5rem 0; 
+}
+
+.article-item .summary { 
+  font-size: 0.9rem; 
+  line-height: 1.5; 
+  color: var(--text-color);
+}
+
+.article-actions { 
+  display: flex; 
+  gap: 1rem; 
+  margin-top: 0.75rem; 
+}
+
+.article-actions .action-link, .article-actions .action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.article-actions .action-button[disabled] { 
+  color: var(--success-color); 
+  cursor: not-allowed; 
+}
+
+.info-message {
+  padding: 2rem;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}

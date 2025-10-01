@@ -1,0 +1,47 @@
+.sidebar-nav {
+  background-color: var(--secondary-color);
+  color: #ecf0f1;
+  width: 250px;
+  height: calc(100vh - 60px);
+  position: fixed;
+  top: 60px;
+  left: 0;
+  padding-top: 2rem;
+  border-right: 1px solid #34495e;
+}
+
+.sidebar-nav nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.sidebar-nav nav ul li a:hover {
+  background-color: #34495e;
+  color: white;
+}
+
+.sidebar-nav nav ul li a.active {
+  background-color: #34495e;
+  color: white;
+  border-left-color: var(--primary-color);
+}
+
+/* Se eliminó la regla para '.sidebar-nav nav ul li a.placeholder' 
+  ya que el enlace ahora está activo.
+*/
+
+.sidebar-nav nav ul li a span {
+  font-weight: 500;
+}
