@@ -1,0 +1,51 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "jest --coverage --runInBand",
+    "test:ci": "jest --coverage --runInBand",
+    "test:unit": "jest --runInBand --testPathPattern=tests",
+    "test:integration": "jest --runInBand --testPathPattern=tests.integration"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.21.0",
+    "axios": "^1.12.2",
+    "bcryptjs": "^3.0.2",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "dropbox": "^10.34.0",
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.19.0",
+    "mongoose": "^8.18.0",
+    "multer": "^2.0.2",
+    "openai": "^5.19.1",
+    "serpapi": "^2.2.1"
+  },
+  "devDependencies": {
+    "jest": "^29.6.0",
+    "mongodb-memory-server": "^8.14.0",
+    "node-mocks-http": "^1.17.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 300000,
+    "coverageReporters": ["json", "lcov", "text", "text-summary"],
+    "coverageThreshold": {
+      "global": {
+        "lines": 70,
+        "statements": 70
+      }
+    }
+  }
+}

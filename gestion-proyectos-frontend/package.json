@@ -1,0 +1,71 @@
+{
+  "name": "gestion-proyectos-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.11.0",
+    "docx": "^9.5.1",
+    "mdast-util-to-hast": "^13.2.0",
+    "officegen": "^0.6.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.9.3",
+    "react-scripts": "5.0.1",
+    "recharts": "^3.1.2",
+    "remark-rehype": "^11.1.2",
+    "unist-util-visit": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:cov": "react-scripts test --watchAll=false --coverage",
+    "test:ci": "react-scripts test --watchAll=false --coverage --runInBand",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "jest-axe": "^10.0.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!axios)/"
+    ]
+  ,
+    "coverageReporters": ["json","lcov","text","text-summary"],
+    "coverageThreshold": {
+      "global": {
+        "lines": 70,
+        "statements": 70
+      }
+    }
+  }
+}
