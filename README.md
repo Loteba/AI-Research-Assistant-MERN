@@ -1,5 +1,5 @@
 
-# AI Research Assistant – Monorepo (MERN + IA)
+# AI Research Assistant – Proyectify AI
 
 Monorepo del proyecto **AI Research Assistant / ProyectifyIA**, que integra:
 
