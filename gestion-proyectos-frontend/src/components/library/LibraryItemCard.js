@@ -9,7 +9,7 @@ const LibraryItemCard = ({ item }) => {
   return (
     <div className="library-card">
       <div className="item-type-icon">
-        {item.itemType === 'pdf' ? <FaFilePdf /> : <FaLink />}
+        {item.itemType === 'pdf' ? <FaFilePdf data-testid="icon-pdf" /> : <FaLink data-testid="icon-link" />}
       </div>
       <div className="item-content">
         <h4>{item.title}</h4>

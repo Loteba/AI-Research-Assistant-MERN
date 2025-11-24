@@ -1,0 +1,1089 @@
+{
+	"info": {
+		"_postman_id": "f8d7d1b2-a655-4cd0-852a-547a0929c6c8",
+		"name": "AI Research Assistant MERN",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49308765",
+		"_collection_link": "https://avionics-technologist-91716697-4912893.postman.co/workspace/MORI-OCTAVIO-BELITO-RAMIREZ's-W~ab7bc36d-0b7f-4858-8d02-c57a7ca2a82d/collection/49308765-f8d7d1b2-a655-4cd0-852a-547a0929c6c8?action=share&source=collection_link&creator=49308765"
+	},
+	"item": [
+		{
+			"name": "Autenticación y Usuarios",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Status code es 200 o 201",
+									"pm.test(\"Status code es 200 o 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"// Test 2: El body es JSON válido",
+									"pm.test(\"El body es JSON válido\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"// Test 3: La respuesta contiene un token o campo de éxito",
+									"let data;",
+									"try {",
+									"    data = pm.response.json();",
+									"} catch (e) {",
+									"    data = {};",
+									"}",
+									"",
+									"pm.test(\"La respuesta contiene 'token' o 'success'\", function () {",
+									"    pm.expect(",
+									"        data.hasOwnProperty('token') || data.hasOwnProperty('success')",
+									"    ).to.be.true;",
+									"});",
+									"",
+									"// Test 4: El token (si existe) es un string",
+									"if (data.token) {",
+									"    pm.test(\"El token es un string\", function () {",
+									"        pm.expect(data.token).to.be.a('string');",
+									"    });",
+									"}",
+									"",
+									"// Test avanzado: Validación de JWT y estructura de usuario",
+									"pm.test(\"El token es un JWT válido y el usuario tiene la estructura esperada\", function () {",
+									"    // Validar que el status code sea 200 o 201",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"    // Validar que el body sea JSON válido",
+									"    pm.response.to.be.json;",
+									"    // Validar que existe el campo 'token' y que es un JWT válido",
+									"    pm.expect(data).to.have.property('token');",
+									"    pm.expect(data.token).to.be.a('string');",
+									"    // Validar estructura JWT: header.payload.signature",
+									"    const jwtParts = data.token.split('.');",
+									"    pm.expect(jwtParts.length).to.eql(3);",
+									"    // Validar que cada parte sea base64url (no validamos firma, solo estructura)",
+									"    jwtParts.forEach(function(part) {",
+									"        pm.expect(part).to.match(/^[A-Za-z0-9_-]+$/);",
+									"    });",
+									"    // Si existe el campo 'user', validar estructura",
+									"    if (data.user) {",
+									"        pm.expect(data.user).to.be.an('object');",
+									"        pm.expect(data.user).to.have.property('id');",
+									"        pm.expect(data.user).to.have.property('email');",
+									"        pm.expect(data.user).to.have.property('role');",
+									"        pm.expect(data.user.email).to.match(/^.+@.+\\..+$/); // Email válido",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"marlon13\",\r\n  \"name\": \"Marloncito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						},
+						"description": "**Propósito:**  \nRegistra un nuevo usuario en el sistema.\n\n**Parámetros del cuerpo de la solicitud (JSON):**\n\n- `email` (string, requerido): Correo electrónico del usuario.\n    \n- `password` (string, requerido): Contraseña del usuario.\n    \n- `name` (string, requerido): Nombre completo del usuario.\n    \n\n**Ejemplo de cuerpo de solicitud:**\n\n``` json\n{\n  \"email\": \"usuario@ejemplo.com\",\n  \"password\": \"tuContraseña\",\n  \"name\": \"Nombre Usuario\"\n}\n\n ```\n\n**Respuesta esperada:**\n\n- **Estado:** `201 Created` (o `200 OK`)\n    \n- **Cuerpo (JSON):**\n    - `token` (string): Token JWT de autenticación para el usuario.\n        \n    - `user` (objeto, opcional): Contiene detalles del usuario como `id`, `email` y `role`.\n        \n\n**Ejemplo de respuesta:**\n\n``` json\n{\n  \"_id\": \"<userId>\",\n  \"name\": \"Nombre Usuario\",\n  \"email\": \"usuario@ejemplo.com\",\n  \"token\": \"<jwt_token>\",\n  \"user\": {\n    \"id\": \"<userId>\",\n    \"email\": \"usuario@ejemplo.com\",\n    \"role\": \"user\"\n  }\n}\n\n ```\n\nEl campo `token` siempre está presente. El campo `user` puede estar incluido dependiendo de la implementación de la API."
+					},
+					"response": []
+				},
+				{
+					"name": "Login Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Visualization Script",
+									"// Visualization Script",
+									"const template = `",
+									"<div style=\"font-family: Arial, sans-serif; max-width: 400px; margin: 20px auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #fafbfc;\">",
+									"  <h3 style=\"margin-top: 0;\">Usuario Logueado</h3>",
+									"  <p><strong>Nombre:</strong> {{name}}</p>",
+									"  <p><strong>Email:</strong> {{email}}</p>",
+									"  <div style=\"margin-top: 8px;\"><strong>Role:</strong> <span>{{role}}</span></div>",
+									"</div>",
+									"`;",
+									"",
+									"function createPayload() {",
+									"  let data = {};",
+									"  try {",
+									"    data = pm.response.json();",
+									"  } catch (e) {}",
+									"  return {",
+									"    name: data.name || 'N/A',",
+									"    email: data.email || 'N/A',",
+									"    role: data.role || 'N/A'",
+									"  };",
+									"}",
+									"",
+									"pm.visualizer.set(template, createPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"marlon13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Perfil Propio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request: Asegura que el header Authorization use el token actualizado",
+									"let token = pm.environment.get('token') || pm.collectionVariables.get('token');",
+									"if (token) {",
+									"    pm.request.headers.upsert({ key: 'Authorization', value: 'Bearer ' + token });",
+									"} else {",
+									"    console.warn('No se encontró un token válido en variables de entorno o colección.');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test de autenticación y estructura para obtener perfil propio",
+									"const status = pm.response.code;",
+									"let jsonData;",
+									"try { jsonData = pm.response.json(); } catch(e) { jsonData = null; }",
+									"",
+									"if (status === 401 || status === 403) {",
+									"    pm.test(\"Error de autenticación claro\", function () {",
+									"        pm.expect([401, 403]).to.include(status);",
+									"        pm.expect(jsonData).to.have.property(\"message\");",
+									"        pm.expect(jsonData.message).to.match(/(no autorizado|token inválido|forbidden|unauthorized)/i);",
+									"    });",
+									"} else {",
+									"    pm.test(\"Respuesta exitosa (200)\", function () {",
+									"        pm.response.to.have.status(200);",
+									"    });",
+									"    pm.test(\"La respuesta contiene datos de usuario\", function () {",
+									"        pm.expect(jsonData).to.be.an('object');",
+									"        pm.expect(jsonData).to.have.property(\"id\");",
+									"        pm.expect(jsonData).to.have.property(\"email\");",
+									"        pm.expect(jsonData).to.have.property(\"name\");",
+									"        pm.expect(jsonData).to.have.property(\"role\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/users/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Perfil Propio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Código de estado",
+									"pm.test(\"El código de estado debe ser 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test 2: Validar presencia de campos en la respuesta",
+									"pm.test(\"La respuesta debe contener los campos 'name', 'email' y 'token'\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('name');",
+									"    pm.expect(jsonData).to.have.property('email');",
+									"    pm.expect(jsonData).to.have.property('token');",
+									"});",
+									"",
+									"// Test 3: Validar que el email de la respuesta coincide con el enviado",
+									"pm.test(\"El campo 'email' en la respuesta debe coincidir con el enviado en el body\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var requestBody = pm.request.body.raw ? JSON.parse(pm.request.body.raw) : {};",
+									"    pm.expect(jsonData.email).to.eql(requestBody.email);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjU1ZmE4NzU2Mzk0ZjgwYmJhNzExMyIsImlhdCI6MTc2MDkxNjg2MSwiZXhwIjoxNzYzNTA4ODYxfQ.yghzNWI4XMUIzHUUwbEDNz6Hdys4JbU0Ftb5-TP7drU"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Marloncito\",\"email\":\"Javier1@gmail.com\",\"password\":\"marlon13\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar Contraseña / Solicitar Reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Verificar que el código de respuesta sea 200",
+									"pm.test(\"El código de respuesta debe ser 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test 2: Verificar que el cuerpo sea JSON válido",
+									"pm.test(\"El cuerpo de la respuesta debe ser JSON válido\", function () {",
+									"    pm.expect(function () {",
+									"        pm.response.json();",
+									"    }).to.not.throw();",
+									"});",
+									"",
+									"// Test 3: Verificar que exista el campo 'message' y que el mensaje sea el esperado",
+									"pm.test(\"El cuerpo debe tener el campo 'message' con el mensaje esperado\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"    pm.expect(jsonData.message).to.eql('Si el email está registrado, se enviarán instrucciones para restablecer la contraseña.');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"moribelito584@gmail.com\",\r\n  \"password\": \"marlon13\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Administrador - Listar Usuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Visualization Script",
+									"// Visualization Script",
+									"const template = `",
+									"<table border=\"1\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;\">",
+									"  <thead>",
+									"    <tr>",
+									"      <th>ID</th>",
+									"      <th>Email</th>",
+									"      <th>Nombre</th>",
+									"      <th>Rol</th>",
+									"    </tr>",
+									"  </thead>",
+									"  <tbody>",
+									"    {{#if users.length}}",
+									"      {{#each users}}",
+									"        <tr>",
+									"          <td>{{id}}</td>",
+									"          <td>{{email}}</td>",
+									"          <td>{{name}}</td>",
+									"          <td>{{role}}</td>",
+									"        </tr>",
+									"      {{/each}}",
+									"    {{else}}",
+									"      <tr><td colspan=\"4\" style=\"text-align:center;\">No hay usuarios</td></tr>",
+									"    {{/if}}",
+									"  </tbody>",
+									"</table>`;",
+									"",
+									"function createPayload() {",
+									"  let users = [];",
+									"  try {",
+									"    const data = pm.response.json();",
+									"    if (Array.isArray(data)) {",
+									"      users = data.map(u => ({",
+									"        id: u.id || '',",
+									"        email: u.email || '',",
+									"        name: u.name || '',",
+									"        role: u.role || ''",
+									"      }));",
+									"    }",
+									"  } catch (e) {}",
+									"  return { users };",
+									"}",
+									"pm.visualizer.set(template, createPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjU3OTRmMjE0YWYzZTQ2MzNjMjkzYiIsImlhdCI6MTc2MTAwMzc3OCwiZXhwIjoxNzYzNTk1Nzc4fQ.pZ_kYShOoXUcfy_D_2zgm7FFyBdHdxik1Zrg9Z5YPHA"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Administrador - Modificar Rol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Tests automáticos en español para la respuesta de actualización de rol a admin",
+									"",
+									"pm.test(\"El código de estado es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La respuesta es JSON válido\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"let data;",
+									"try {",
+									"    data = pm.response.json();",
+									"} catch (e) {",
+									"    data = null;",
+									"}",
+									"",
+									"pm.test(\"La respuesta contiene el mensaje de éxito\", function () {",
+									"    pm.expect(data).to.have.property(\"message\");",
+									"    pm.expect(data.message).to.include(\"actualizado a admin\");",
+									"});",
+									"",
+									"pm.test(\"La respuesta contiene el objeto usuario\", function () {",
+									"    pm.expect(data).to.have.property(\"user\");",
+									"    pm.expect(data.user).to.be.an(\"object\");",
+									"});",
+									"",
+									"if (data && data.user) {",
+									"    pm.test(\"El usuario tiene un ID válido\", function () {",
+									"        pm.expect(data.user).to.have.property(\"_id\");",
+									"        pm.expect(data.user._id).to.be.a(\"string\");",
+									"    });",
+									"    pm.test(\"El usuario tiene un nombre\", function () {",
+									"        pm.expect(data.user).to.have.property(\"name\");",
+									"        pm.expect(data.user.name).to.be.a(\"string\");",
+									"    });",
+									"    pm.test(\"El usuario tiene un email\", function () {",
+									"        pm.expect(data.user).to.have.property(\"email\");",
+									"        pm.expect(data.user.email).to.be.a(\"string\");",
+									"    });",
+									"    pm.test(\"El usuario tiene fecha de creación y actualización\", function () {",
+									"        pm.expect(data.user).to.have.property(\"createdAt\");",
+									"        pm.expect(data.user).to.have.property(\"updatedAt\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjU3OTRmMjE0YWYzZTQ2MzNjMjkzYiIsImlhdCI6MTc2MTAwMzc3OCwiZXhwIjoxNzYzNTk1Nzc4fQ.pZ_kYShOoXUcfy_D_2zgm7FFyBdHdxik1Zrg9Z5YPHA"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/dev/set-admin/68f55fa8756394f80bba7113",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"dev",
+								"set-admin",
+								"68f55fa8756394f80bba7113"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gestión de Proyectos y Biblioteca",
+			"item": [
+				{
+					"name": "Crear Nuevo Proyecto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test para validar creación exitosa de proyecto",
+									"pm.test(\"El código de estado debe ser 201 (Created)\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Parsear el cuerpo de la respuesta",
+									"let jsonData;",
+									"try {",
+									"    jsonData = pm.response.json();",
+									"} catch (e) {",
+									"    jsonData = null;",
+									"}",
+									"",
+									"pm.test(\"El cuerpo de la respuesta debe ser un objeto JSON válido\", function () {",
+									"    pm.expect(jsonData).to.be.an(\"object\");",
+									"});",
+									"",
+									"// Validar presencia y no vacíos de los campos requeridos",
+									"const requiredFields = [\"_id\", \"name\", \"description\", \"areaTematica\", \"user\"];",
+									"",
+									"requiredFields.forEach(function(field) {",
+									"    pm.test(`El campo '${field}' debe existir y no estar vacío`, function () {",
+									"        pm.expect(jsonData).to.have.property(field);",
+									"        pm.expect(jsonData[field]).to.not.be.undefined;",
+									"        pm.expect(jsonData[field]).to.not.be.null;",
+									"        if (typeof jsonData[field] === \"string\") {",
+									"            pm.expect(jsonData[field].trim().length).to.be.above(0);",
+									"        }",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjU1ZmE4NzU2Mzk0ZjgwYmJhNzExMyIsImlhdCI6MTc2MDkxMjUyMywiZXhwIjoxNzYzNTA0NTIzfQ.guGWRQ4trOIbvQW7nde3F4Nz4o3_eLS1mtFPE7I1NyQ"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": \"68f55fa8756394f80bba7113\",\r\n  \"name\": \"Análisis de Sentimiento en Redes Sociales\",\r\n  \"description\": \"Describe el objetivo principal y el alcance de tu investigación.\",\r\n  \"areaTematica\": \"Inteligencia Artificial\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Proyectos Propios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Script pre-request para depuración de token y asegurando el header Authorization",
+									"const envAuthToken = pm.environment.get('authToken');",
+									"",
+									"// Imprime en consola el valor actual del token",
+									"echo = console.log || function(){};",
+									"echo('Valor de la variable de entorno authToken:', envAuthToken);",
+									"",
+									"// Asegura que el header Authorization use el token actual",
+									"definirHeader = function() {",
+									"    if (envAuthToken) {",
+									"        pm.request.headers.upsert({ key: 'Authorization', value: 'Bearer ' + envAuthToken });",
+									"        echo('Header Authorization actualizado:', 'Bearer ' + envAuthToken);",
+									"    } else {",
+									"        echo('No se encontró authToken en el entorno.');",
+									"    }",
+									"};",
+									"definirHeader();",
+									"",
+									"// Imprime en consola el valor final del header Authorization",
+									"const authHeader = pm.request.headers.get('Authorization');",
+									"echo('Valor final del header Authorization:', authHeader);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Visualization Script",
+									"// Visualization Script",
+									"const template = `",
+									"<table border=\"1\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse:collapse; width:100%;\">",
+									"  <thead>",
+									"    <tr>",
+									"      <th>ID</th>",
+									"      <th>Nombre</th>",
+									"      <th>Fecha de Creación</th>",
+									"    </tr>",
+									"  </thead>",
+									"  <tbody>",
+									"    {{#each projects}}",
+									"      <tr>",
+									"        <td>{{id}}{{_id}}</td>",
+									"        <td>{{name}}</td>",
+									"        <td>{{createdAt}}</td>",
+									"      </tr>",
+									"    {{/each}}",
+									"  </tbody>",
+									"</table>",
+									"`;",
+									"",
+									"function createPayload() {",
+									"    let data = pm.response.json();",
+									"    if (!Array.isArray(data)) data = [];",
+									"    // Map to ensure all fields exist",
+									"    const projects = data.map(p => ({",
+									"        id: p.id || '',",
+									"        _id: (!p.id && p._id) ? p._id : '',",
+									"        name: p.name || p.nombre || '',",
+									"        createdAt: p.createdAt || p.fechaCreacion || p.fecha_creacion || ''",
+									"    }));",
+									"    return { projects };",
+									"}",
+									"",
+									"pm.visualizer.set(template, createPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/projects/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Proyecto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"Nombre actualizado\",\r\n\"description\": \"Descripción actualizada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/projects/68f57dcf214af3e4633c296d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects",
+								"68f57dcf214af3e4633c296d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Proyecto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test para validar si el token fue enviado y manejo de error 401",
+									"",
+									"pm.test('El header Authorization contiene el token', function () {",
+									"    const authHeader = pm.request.headers.get('Authorization');",
+									"    pm.expect(authHeader, 'El header Authorization debe estar presente').to.exist;",
+									"    pm.expect(authHeader, 'El header Authorization debe contener Bearer').to.include('Bearer');",
+									"    const token = pm.environment.get('token');",
+									"    pm.expect(authHeader, 'El token debe estar presente en el header').to.include(token);",
+									"});",
+									"",
+									"pm.test('Respuesta 401 indica token inválido o expirado', function () {",
+									"    if (pm.response.code === 401) {",
+									"        let mensaje = 'Token inválido o expirado. Por favor, vuelve a iniciar sesión.';",
+									"        try {",
+									"            const body = pm.response.json();",
+									"            if (body && body.message) {",
+									"                mensaje += ' Mensaje del servidor: ' + body.message;",
+									"            }",
+									"        } catch (e) {}",
+									"        console.warn(mensaje);",
+									"        pm.expect.fail(mensaje);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/projects/68f57dcf214af3e4633c296d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects",
+								"68f57dcf214af3e4633c296d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar Paper (PDF) al Proyecto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 or 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test(\"Response has _id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('_id');",
+									"});",
+									"",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData._id) {",
+									"        pm.environment.set(\"libraryItemId\", jsonData._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "authors",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "Llave",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjU3OTRmMjE0YWYzZTQ2MzNjMjkzYiIsImlhdCI6MTc2MDkxODI1NCwiZXhwIjoxNzYzNTEwMjU0fQ.aGZsZgcl19bVUxR54v1_dZU5XIcBYFJ79Upjrk1JZO8\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/projects/68f57dcf214af3e4633c296d/papers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects",
+								"68f57dcf214af3e4633c296d",
+								"papers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Papers por Proyecto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/projects/:id/papers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects",
+								":id",
+								"papers"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compartir Proyecto / Invitar Colaborador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjU3OTRmMjE0YWYzZTQ2MzNjMjkzYiIsImlhdCI6MTc2MDkxODI1NCwiZXhwIjoxNzYzNTEwMjU0fQ.aGZsZgcl19bVUxR54v1_dZU5XIcBYFJ79Upjrk1JZO8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"collaboratorEmail\": \"fred@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/projects/68f57dcf214af3e4633c296d/share",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"projects",
+								"68f57dcf214af3e4633c296d",
+								"share"
+							]
+						},
+						"description": "Este endpoint permite al propietario de un proyecto compartirlo con otro usuario invitándolo como colaborador mediante su correo electrónico.\n\n**Parámetros del cuerpo (JSON):**\n- `collaboratorEmail` (string, requerido): Correo electrónico del usuario a invitar.\n\n**Encabezados requeridos:**\n- `Authorization`: Bearer <token>\n\n**Respuestas esperadas:**\n- 200 OK: Colaborador invitado exitosamente.\n- 400 Solicitud incorrecta: El campo collaboratorEmail es requerido.\n- 401 No autorizado: Token inválido o ausente.\n- 403 Prohibido: Solo el propietario puede compartir el proyecto.\n\n**Ejemplo de error 403:**\n```json\n{\n  \"message\": \"Solo el propietario puede compartir el proyecto\",\n  \"stack\": \"Error: Solo el propietario puede compartir el proyecto...\"\n}\n```\n\n**Errores comunes:**\n- 401 No autorizado: Token inválido o ausente.\n- 403 Prohibido: Solo el propietario puede compartir el proyecto.\n- 400 Solicitud incorrecta: El campo collaboratorEmail es requerido."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funcionalidades con IA",
+			"item": [
+				{
+					"name": "Chatbot - Enviar Consulta",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Resumir Paper",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Sugerir Artículos Relevantes",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Automatización y Métricas",
+			"item": [
+				{
+					"name": "Dashboard - Obtener Métricas",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Configurar Notificaciones",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Auditoría - Consultar Logs",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

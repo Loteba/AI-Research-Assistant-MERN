@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.53% </span>
+                <span class="strong">79.03% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>91/113</span>
+                <span class='fraction'>98/124</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.37% </span>
+                <span class="strong">67.2% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>80/117</span>
+                <span class='fraction'>84/125</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/16</span>
+                <span class='fraction'>16/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.41% </span>
+                <span class="strong">80.18% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>78/97</span>
+                <span class='fraction'>85/106</span>
             </div>
         
             
@@ -282,9 +282,24 @@
 <a name='L217'></a><a href='#L217'>217</a>
 <a name='L218'></a><a href='#L218'>218</a>
 <a name='L219'></a><a href='#L219'>219</a>
-<a name='L220'></a><a href='#L220'>220</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -359,11 +374,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -397,11 +421,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -506,6 +534,7 @@
 &nbsp;
 const { GoogleGenAI } = require('@google/genai');
 const axios = require('axios');
+const MetricEvent = require('../models/metricEventModel');
 &nbsp;
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_API_KEY,
@@ -573,17 +602,26 @@ const summarizeText = async (req, res) =&gt; {
         { role: 'user', parts: [{ text: `Texto a resumir:\n${text}` }] },
         { role: 'user', parts: [{ text: userPrompt }] },
       ],
-      generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
+      generationConfig: { temperature: 0.3, maxOutputTokens: 512 },
     });
-&nbsp;
-    const resp = await withRetry(exec);
+    // Enfoque rápido: límite duro de ~2.8s para el 80%
+    const timeoutMs = Number(process.env.AI_TIMEOUT_MS || 12000);
+    const resp = await Promise.race([
+      withRetry(exec),
+      new Promise((_, reject) =&gt; setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >reject(new Error('timeout')),</span> timeoutMs)),
+    ]);
     const summary = extractText(resp);
+    // Registrar evento de resumen generado
+    try {
+      await MetricEvent.create({ user: req.user?._id, type: 'summary_generated', meta: { model } });
+    } catch (e) { /* no bloquear por métricas */ }
     return res.json({ summary, model });
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    console.error('Gemini summarizeText error:', safeErrorPayload(err));</span>
-<span class="cstat-no" title="statement not covered" >    res.status(res.statusCode !== 200 ? res.statusCode : 500);</span>
+    const code = <span class="cstat-no" title="statement not covered" >err?.message === 'timeout' ? 504 : 500;</span>
+<span class="cstat-no" title="statement not covered" >    res.status(code);</span>
 <span class="cstat-no" title="statement not covered" >    return res.json({</span>
-      message: 'Error al contactar la API de Google AI (Summarize)',
+      message: err?.message === 'timeout' ? 'La generación tomó demasiado tiempo. Intenta con menos texto o vuelve a intentarlo.' : 'Error al contactar la API de Google AI (Summarize)',
       ...safeErrorPayload(err),
     });
   }
@@ -614,17 +652,21 @@ const handleChat = async (req, res) =&gt; {
         ...mappedHistory,
         { role: 'user', parts: [{ text: message }] },
       ],
-      generationConfig: { temperature: 0.7, maxOutputTokens: 2048 },
+      generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
     });
-&nbsp;
-    const resp = await withRetry(exec);
+    const timeoutMs = Number(process.env.AI_TIMEOUT_MS || 12000);
+    const resp = await Promise.race([
+      withRetry(exec),
+      new Promise((_, reject) =&gt; setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >reject(new Error('timeout')),</span> timeoutMs)),
+    ]);
     const text = extractText(resp);
     return res.json({ text, model });
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    console.error('Gemini chat error:', safeErrorPayload(err));</span>
-<span class="cstat-no" title="statement not covered" >    res.status(res.statusCode !== 200 ? res.statusCode : 500);</span>
+    const code = <span class="cstat-no" title="statement not covered" >err?.message === 'timeout' ? 504 : 500;</span>
+<span class="cstat-no" title="statement not covered" >    res.status(code);</span>
 <span class="cstat-no" title="statement not covered" >    return res.json({</span>
-      message: 'Error al contactar la API de Google AI (Chat)',
+      message: err?.message === 'timeout' ? 'La respuesta del chat tomó demasiado tiempo, intenta de nuevo.' : 'Error al contactar la API de Google AI (Chat)',
       ...safeErrorPayload(err),
     });
   }
@@ -659,7 +701,7 @@ const suggestArticles = async (req, res) =&gt; {
     const params = { engine: 'google_scholar', q: query, api_key: apiKey };
     <span class="missing-if-branch" title="if path not taken" >I</span>if (yearFrom &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >Number(yearFrom))</span> <span class="cstat-no" title="statement not covered" >params.as_ylo = Number(yearFrom);</span>
 &nbsp;
-    const { data } = await axios.get('https://serpapi.com/search.json', { params });
+    const { data } = await axios.get('https://serpapi.com/search.json', { params, timeout: 2000 });
 &nbsp;
     if (data?.error) {
       console.error('SerpAPI error:', data.error);
@@ -727,7 +769,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-06T20:39:40.030Z
+                at 2025-11-15T21:05:58.864Z
             </div>
         <script src="../prettify.js"></script>
         <script>

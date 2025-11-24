@@ -1,0 +1,440 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Juan García",
+      "email": "juan@example.com",
+      "password": "hashed_password_123",
+      "avatarUrl": "https://api.example.com/avatars/juan.jpg",
+      "role": "admin",
+      "createdAt": "2025-01-15T10:30:00Z",
+      "updatedAt": "2025-11-15T15:45:00Z"
+    },
+    {
+      "id": 2,
+      "name": "María López",
+      "email": "maria@example.com",
+      "password": "hashed_password_456",
+      "avatarUrl": "https://api.example.com/avatars/maria.jpg",
+      "role": "user",
+      "createdAt": "2025-02-20T09:15:00Z",
+      "updatedAt": "2025-11-10T12:30:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Carlos Rodríguez",
+      "email": "carlos@example.com",
+      "password": "hashed_password_789",
+      "avatarUrl": "https://api.example.com/avatars/carlos.jpg",
+      "role": "user",
+      "createdAt": "2025-03-10T14:20:00Z",
+      "updatedAt": "2025-11-12T08:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Ana Martínez",
+      "email": "ana@example.com",
+      "password": "hashed_password_101",
+      "avatarUrl": "https://api.example.com/avatars/ana.jpg",
+      "role": "user",
+      "createdAt": "2025-05-05T11:45:00Z",
+      "updatedAt": "2025-11-14T16:20:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Pedro Sánchez",
+      "email": "pedro@example.com",
+      "password": "hashed_password_202",
+      "avatarUrl": "https://api.example.com/avatars/pedro.jpg",
+      "role": "researcher",
+      "createdAt": "2025-06-12T13:10:00Z",
+      "updatedAt": "2025-11-13T10:15:00Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Análisis de Machine Learning en Educación",
+      "description": "Estudio sobre aplicaciones de machine learning en sistemas educativos modernos",
+      "areaTematica": "Inteligencia Artificial",
+      "user": 1,
+      "status": "active",
+      "createdAt": "2025-01-20T10:00:00Z",
+      "updatedAt": "2025-11-15T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Blockchain para Autenticación Digital",
+      "description": "Implementación de blockchain para sistemas de autenticación descentralizada",
+      "areaTematica": "Criptografía",
+      "user": 2,
+      "status": "active",
+      "createdAt": "2025-02-28T09:30:00Z",
+      "updatedAt": "2025-11-14T11:20:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Análisis de Redes Sociales",
+      "description": "Estudio del impacto de redes sociales en la salud mental de adolescentes",
+      "areaTematica": "Psicología Aplicada",
+      "user": 3,
+      "status": "active",
+      "createdAt": "2025-03-15T15:45:00Z",
+      "updatedAt": "2025-11-12T13:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Sostenibilidad en Energías Renovables",
+      "description": "Evaluación de tecnologías sostenibles para producción de energía",
+      "areaTematica": "Medio Ambiente",
+      "user": 4,
+      "status": "in_progress",
+      "createdAt": "2025-05-10T12:00:00Z",
+      "updatedAt": "2025-11-15T09:45:00Z"
+    },
+    {
+      "id": 5,
+      "name": "NLP en Análisis de Sentimientos",
+      "description": "Aplicación de procesamiento de lenguaje natural para análisis de sentimientos",
+      "areaTematica": "Inteligencia Artificial",
+      "user": 1,
+      "status": "planning",
+      "createdAt": "2025-06-01T08:30:00Z",
+      "updatedAt": "2025-11-13T17:00:00Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "projectId": 1,
+      "title": "Recolectar datos de entrenamiento",
+      "description": "Obtener dataset de 10000+ registros de instituciones educativas",
+      "status": "completed",
+      "priority": "high",
+      "user": 1,
+      "dueDate": "2025-02-28T23:59:00Z",
+      "createdAt": "2025-01-20T10:15:00Z",
+      "updatedAt": "2025-02-26T16:45:00Z"
+    },
+    {
+      "id": 2,
+      "projectId": 1,
+      "title": "Desarrollar modelo de predicción",
+      "description": "Crear modelo ML con algoritmos avanzados de clasificación",
+      "status": "in_progress",
+      "priority": "high",
+      "user": 2,
+      "dueDate": "2025-12-15T23:59:00Z",
+      "createdAt": "2025-02-27T11:30:00Z",
+      "updatedAt": "2025-11-15T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "projectId": 2,
+      "title": "Diseño de arquitectura blockchain",
+      "description": "Definir estructura y protocolos de consenso",
+      "status": "in_progress",
+      "priority": "critical",
+      "user": 2,
+      "dueDate": "2025-12-01T23:59:00Z",
+      "createdAt": "2025-03-01T14:00:00Z",
+      "updatedAt": "2025-11-14T15:20:00Z"
+    },
+    {
+      "id": 4,
+      "projectId": 2,
+      "title": "Implementar contratos inteligentes",
+      "description": "Escribir y testear contratos en Solidity",
+      "status": "pending",
+      "priority": "high",
+      "user": 3,
+      "dueDate": "2025-01-15T23:59:00Z",
+      "createdAt": "2025-04-10T09:45:00Z",
+      "updatedAt": "2025-11-12T08:30:00Z"
+    },
+    {
+      "id": 5,
+      "projectId": 3,
+      "title": "Análisis de datos demográficos",
+      "description": "Procesar y analizar datos de 5000+ participantes",
+      "status": "completed",
+      "priority": "high",
+      "user": 3,
+      "dueDate": "2025-04-30T23:59:00Z",
+      "createdAt": "2025-03-20T10:00:00Z",
+      "updatedAt": "2025-04-28T17:00:00Z"
+    },
+    {
+      "id": 6,
+      "projectId": 4,
+      "title": "Evaluación de tecnologías solares",
+      "description": "Comparar eficiencia de paneles solares de diferentes marcas",
+      "status": "in_progress",
+      "priority": "medium",
+      "user": 4,
+      "dueDate": "2025-12-31T23:59:00Z",
+      "createdAt": "2025-05-15T13:20:00Z",
+      "updatedAt": "2025-11-15T11:45:00Z"
+    },
+    {
+      "id": 7,
+      "projectId": 5,
+      "title": "Preparar corpus de datos",
+      "description": "Recopilar y etiquetar corpus de textos para entrenamiento",
+      "status": "in_progress",
+      "priority": "high",
+      "user": 1,
+      "dueDate": "2025-12-20T23:59:00Z",
+      "createdAt": "2025-06-05T08:00:00Z",
+      "updatedAt": "2025-11-13T14:30:00Z"
+    }
+  ],
+  "projectMembers": [
+    {
+      "id": 1,
+      "projectId": 1,
+      "userId": 1,
+      "role": "owner",
+      "joinedAt": "2025-01-20T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "projectId": 1,
+      "userId": 2,
+      "role": "contributor",
+      "joinedAt": "2025-02-01T14:30:00Z"
+    },
+    {
+      "id": 3,
+      "projectId": 2,
+      "userId": 2,
+      "role": "owner",
+      "joinedAt": "2025-02-28T09:30:00Z"
+    },
+    {
+      "id": 4,
+      "projectId": 2,
+      "userId": 3,
+      "role": "contributor",
+      "joinedAt": "2025-03-05T11:00:00Z"
+    },
+    {
+      "id": 5,
+      "projectId": 3,
+      "userId": 3,
+      "role": "owner",
+      "joinedAt": "2025-03-15T15:45:00Z"
+    },
+    {
+      "id": 6,
+      "projectId": 4,
+      "userId": 4,
+      "role": "owner",
+      "joinedAt": "2025-05-10T12:00:00Z"
+    },
+    {
+      "id": 7,
+      "projectId": 4,
+      "userId": 5,
+      "role": "contributor",
+      "joinedAt": "2025-05-20T10:15:00Z"
+    },
+    {
+      "id": 8,
+      "projectId": 5,
+      "userId": 1,
+      "role": "owner",
+      "joinedAt": "2025-06-01T08:30:00Z"
+    }
+  ],
+  "libraryItems": [
+    {
+      "id": 1,
+      "userId": 1,
+      "projectId": 1,
+      "title": "Machine Learning in Education: A Systematic Review",
+      "authors": "Smith, J., Johnson, K.",
+      "summary": "Revisión sistemática de aplicaciones de ML en educación con enfoque en predictibilidad",
+      "url": "https://example.com/papers/ml-education.pdf",
+      "itemType": "pdf",
+      "tags": ["machine-learning", "education", "AI"],
+      "createdAt": "2025-02-15T10:00:00Z",
+      "updatedAt": "2025-11-15T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "projectId": 2,
+      "title": "Blockchain Security: Challenges and Solutions",
+      "authors": "Chen, L., Williams, P.",
+      "summary": "Análisis profundo de vulnerabilidades en blockchain y soluciones de seguridad",
+      "url": "https://example.com/papers/blockchain-security.pdf",
+      "itemType": "pdf",
+      "tags": ["blockchain", "security", "cryptography"],
+      "createdAt": "2025-03-01T11:30:00Z",
+      "updatedAt": "2025-11-14T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "projectId": 3,
+      "title": "Social Media Impact on Adolescent Mental Health",
+      "authors": "Davis, M., Brown, R.",
+      "summary": "Estudio longitudinal del impacto de redes sociales en salud mental adolescente",
+      "url": "https://example.com/papers/social-media-mental-health.pdf",
+      "itemType": "pdf",
+      "tags": ["psychology", "social-media", "mental-health"],
+      "createdAt": "2025-04-10T13:45:00Z",
+      "updatedAt": "2025-11-12T15:30:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "projectId": 4,
+      "title": "Renewable Energy Technologies: A Comparative Analysis",
+      "authors": "Green, E., Solar, T.",
+      "summary": "Análisis comparativo de tecnologías renovables modernas y sostenibilidad",
+      "url": "https://example.com/papers/renewable-energy.pdf",
+      "itemType": "pdf",
+      "tags": ["energy", "renewable", "sustainability"],
+      "createdAt": "2025-05-20T08:15:00Z",
+      "updatedAt": "2025-11-13T12:00:00Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "projectId": 5,
+      "title": "Natural Language Processing: Sentiment Analysis Deep Dive",
+      "authors": "Lang, N., Process, P.",
+      "summary": "Guía completa de NLP y análisis de sentimientos con deep learning",
+      "url": "https://example.com/papers/nlp-sentiment.pdf",
+      "itemType": "pdf",
+      "tags": ["NLP", "sentiment-analysis", "deep-learning"],
+      "createdAt": "2025-06-10T14:20:00Z",
+      "updatedAt": "2025-11-15T10:30:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 1,
+      "projectId": 1,
+      "type": "task_assigned",
+      "message": "Te han asignado una nueva tarea en el proyecto 'Análisis de Machine Learning'",
+      "read": false,
+      "createdAt": "2025-11-15T15:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "projectId": 2,
+      "type": "project_update",
+      "message": "El proyecto 'Blockchain para Autenticación' ha sido actualizado",
+      "read": true,
+      "createdAt": "2025-11-14T12:30:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "projectId": 1,
+      "type": "member_added",
+      "message": "Carlos Rodríguez se ha unido al proyecto",
+      "read": false,
+      "createdAt": "2025-11-15T14:45:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "projectId": 4,
+      "type": "task_completed",
+      "message": "Una tarea ha sido completada en 'Sostenibilidad en Energías Renovables'",
+      "read": true,
+      "createdAt": "2025-11-13T10:00:00Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "projectId": 5,
+      "type": "comment_added",
+      "message": "Nuevo comentario en la tarea 'Preparar corpus de datos'",
+      "read": false,
+      "createdAt": "2025-11-15T16:20:00Z"
+    }
+  ],
+  "projectInvitations": [
+    {
+      "id": 1,
+      "projectId": 1,
+      "invitedEmail": "nuevo@example.com",
+      "status": "pending",
+      "invitedBy": 1,
+      "createdAt": "2025-11-14T10:00:00Z",
+      "expiresAt": "2025-11-21T23:59:00Z"
+    },
+    {
+      "id": 2,
+      "projectId": 2,
+      "invitedEmail": "otro@example.com",
+      "status": "accepted",
+      "invitedBy": 2,
+      "createdAt": "2025-11-10T14:30:00Z",
+      "acceptedAt": "2025-11-11T09:15:00Z"
+    },
+    {
+      "id": 3,
+      "projectId": 3,
+      "invitedEmail": "participante@example.com",
+      "status": "rejected",
+      "invitedBy": 3,
+      "createdAt": "2025-11-12T11:00:00Z",
+      "rejectedAt": "2025-11-12T15:30:00Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": 1,
+      "userId": 1,
+      "action": "project_created",
+      "resource": "project",
+      "resourceId": 1,
+      "details": "Proyecto 'Análisis de Machine Learning' creado",
+      "timestamp": "2025-01-20T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "action": "task_completed",
+      "resource": "task",
+      "resourceId": 1,
+      "details": "Tarea 'Recolectar datos' completada",
+      "timestamp": "2025-02-26T16:45:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "action": "member_added",
+      "resource": "projectMember",
+      "resourceId": 4,
+      "details": "Carlos Rodríguez agregado como contribuidor",
+      "timestamp": "2025-03-05T11:00:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "action": "library_item_added",
+      "resource": "libraryItem",
+      "resourceId": 4,
+      "details": "Paper sobre energías renovables agregado a la biblioteca",
+      "timestamp": "2025-05-20T08:15:00Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "action": "project_updated",
+      "resource": "project",
+      "resourceId": 5,
+      "details": "Descripción del proyecto actualizada",
+      "timestamp": "2025-06-01T08:30:00Z"
+    }
+  ]
+}

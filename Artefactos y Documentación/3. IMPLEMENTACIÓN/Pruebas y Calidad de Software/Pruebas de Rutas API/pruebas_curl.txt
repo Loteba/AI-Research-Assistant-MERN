@@ -1,0 +1,197 @@
+-----------------------------------------------------------------------
+
+I. AUTENTICACIÓN Y USUARIOS
+
+-----------------------------------------------------------------------
+
+=== REGISTRO DE USUARIO ===
+Descripción: Prueba el registro de un nuevo usuario enviando las credenciales básicas.
+Verifica la creación de la cuenta (código 201) y la devolución del token JWT.
+Comando:
+curl -X POST http://localhost:3000/api/users/register 
+
+-H "Content-Type: application/json" 
+
+-d '{"name": "Marlon Bonifacio", "email": "marlon.bonifacio@ejemplo.com", "password": "ClaveSegura_Bonifacio"}'
+Respuesta Esperada:
+{
+"_id": "6901f40d4f107f0f62d1a33b",
+"name": "Marlon Bonifacio",
+"email": "marlon.bonifacio@ejemplo.com",
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.GENERATED_TOKEN...",
+"createdAt": "2025-11-17T20:00:00.000Z"
+}
+
+=== LOGIN DE USUARIO ===
+Descripción: Simula el inicio de sesión para obtener un nuevo token de acceso
+con las credenciales de Marlon Bonifacio.
+Comando:
+curl -X POST http://localhost:3000/api/users/login 
+
+-H "Content-Type: application/json" 
+
+-d '{"email":"marlon.bonifacio@ejemplo.com","password":"ClaveSegura_Bonifacio"}'
+Respuesta Esperada:
+{
+"_id": "6901f40d4f107f0f62d1a33b",
+"name": "Marlon Bonifacio",
+"email": "marlon.bonifacio@ejemplo.com",
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.NEW_GENERATED_TOKEN...",
+"role": "user"
+}
+
+=== OBTENER PERFIL PROPIO ===
+Descripción: Ruta protegida para recuperar los datos del perfil del usuario autenticado.
+Comando:
+curl -X GET 'http://localhost:3000/api/users/profile' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]'
+Respuesta Esperada:
+{ "_id": "6901f40d4f107f0f62d1a33b", "name": "Marlon Bonifacio", "email": "marlon.bonifacio@ejemplo.com", ... }
+
+=== RECUPERAR CONTRASEÑA / SOLICITAR RESET ===
+Descripción: Solicita el inicio del proceso de restablecimiento de contraseña.
+Comando:
+curl -X POST 'http://localhost:3000/api/users/forgot-password' 
+
+-H "Content-Type: application/json" 
+
+-d '{"email":"marlon.bonifacio@ejemplo.com"}'
+Respuesta Esperada:
+{ "message": "Si el email está registrado, se enviarán instrucciones para restablecer la contraseña." }
+
+-----------------------------------------------------------------------
+
+II. GESTIÓN DE PROYECTOS Y BIBLIOTECA
+
+-----------------------------------------------------------------------
+
+=== CREAR NUEVO PROYECTO ===
+Descripción: Crea un nuevo proyecto de investigación a nombre del usuario.
+Comando:
+curl -X POST 'http://localhost:3000/api/projects' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]' 
+
+--header 'Content-Type: application/json' 
+
+--data '{"name": "Investigación sobre MERN", "description": "Tesis sobre optimización de stacks MERN.", "areaTematica": "Desarrollo de Software"}'
+Respuesta Esperada:
+{ "_id": "68f57dcf214af3e4633c296d", "name": "Investigación sobre MERN", ... }
+
+=== LISTAR PROYECTOS PROPIOS ===
+Descripción: Obtiene un array con todos los proyectos creados por el usuario autenticado.
+Comando:
+curl -X GET 'http://localhost:3000/api/projects' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]'
+Respuesta Esperada:
+[ { "_id": "68f57dcf...", "name": "Investigación sobre MERN" }, ... ]
+
+=== CARGAR PAPER (PDF) AL PROYECTO ===
+Descripción: Simula la carga de un archivo PDF. Requiere un ID de Proyecto (68f57dcf...)
+y el archivo debe ser enviado como 'multipart/form-data'.
+Comando:
+curl -X POST 'http://localhost:3000/api/projects/68f57dcf214af3e4633c296d/papers' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]' 
+
+-F "file=@/ruta/a/tu/paper.pdf;type=application/pdf"
+Respuesta Esperada:
+{ "message": "Paper subido y asociado al proyecto exitosamente." }
+
+=== COMPARTIR PROYECTO / INVITAR COLABORADOR ===
+Descripción: Añade a otro usuario como colaborador en un proyecto específico.
+Comando:
+curl -X POST 'http://localhost:3000/api/projects/68f57dcf214af3e4633c296d/share' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]' 
+
+--header 'Content-Type: application/json' 
+
+--data '{"collaboratorEmail": "otro.usuario@ejemplo.com"}'
+Respuesta Esperada:
+{ "message": "Colaborador invitado exitosamente." }
+
+-----------------------------------------------------------------------
+
+III. FUNCIONALIDADES CON IA
+
+-----------------------------------------------------------------------
+
+=== CHATBOT - ENVIAR CONSULTA ===
+Descripción: Envía una consulta de texto al modelo de IA y recibe una respuesta generada.
+Comando:
+curl -X POST 'http://localhost:3000/api/ia/chatbot/consult' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]' 
+
+--header 'Content-Type: application/json' 
+
+--data '{"query": "¿Cuál es la diferencia entre un modelo generativo y uno discriminativo?"}'
+Respuesta Esperada:
+{ "response": "Un modelo generativo busca modelar la distribución de los datos, mientras que uno discriminativo solo modela la frontera de decisión entre clases." }
+
+=== RESUMIR PAPER ===
+Descripción: Solicita a la IA generar un resumen conciso de un paper cargado previamente
+(usando el ID del paper: 6902d33b4f107f0f62d1a33c).
+Comando:
+curl -X GET 'http://localhost:3000/api/ia/summarize/paper/6902d33b4f107f0f62d1a33c' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]'
+Respuesta Esperada:
+{ "summary": "Este paper propone un nuevo enfoque para..." }
+
+=== SUGERIR ARTÍCULOS RELEVANTES ===
+Descripción: Pide a la IA sugerir papers relacionados basados en el contenido
+de un proyecto específico (usando el ID de Proyecto: 68f57dcf...).
+Comando:
+curl -X GET 'http://localhost:3000/api/ia/suggest/project/68f57dcf214af3e4633c296d' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]'
+Respuesta Esperada:
+{ "suggestions": [ { "title": "Paper Relacionado 1", "source": "arXiv" }, ... ] }
+
+-----------------------------------------------------------------------
+
+IV. AUTOMATIZACIÓN Y MÉTRICAS
+
+-----------------------------------------------------------------------
+
+=== DASHBOARD - OBTENER MÉTRICAS ===
+Descripción: Recupera estadísticas clave del usuario (número de proyectos, papers, etc.)
+para mostrar en el panel de control.
+Comando:
+curl -X GET 'http://localhost:3000/api/metrics/dashboard' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]'
+Respuesta Esperada:
+{
+"totalProyectos": 1,
+"papersCargados": 5,
+"ultimaActividad": "2025-11-17T20:30:00.000Z"
+}
+
+=== CONFIGURAR NOTIFICACIONES ===
+Descripción: Permite al usuario actualizar sus preferencias de notificación (por ejemplo, habilitar
+o deshabilitar alertas por email).
+Comando:
+curl -X POST 'http://localhost:3000/api/notifications/configure' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_AQUÍ]' 
+
+--header 'Content-Type: application/json' 
+
+--data '{"emailAlertsEnabled": true, "pushNotificationsEnabled": false}'
+Respuesta Esperada:
+{ "message": "Preferencias de notificación actualizadas." }
+
+=== AUDITORÍA - CONSULTAR LOGS (Administrador) ===
+Descripción: (Ruta de Administrador) Obtiene un historial de logs de actividad reciente
+del sistema. Se utiliza un token con rol de Administrador.
+Comando:
+curl -X GET 'http://localhost:3000/api/audit/logs' 
+
+--header 'Authorization: Bearer [TOKEN_JWT_ADMIN_AQUÍ]'
+Respuesta Esperada:
+[ { "timestamp": "2025-11-17T20:30:00.000Z", "action": "Project Created", "user": "Marlon Bonifacio" }, ... ]

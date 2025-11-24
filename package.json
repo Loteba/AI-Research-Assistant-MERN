@@ -1,5 +1,18 @@
 {
+  "name": "proyectifyia-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "mock:start": "json-server --watch db.json --config json-server-config.json --port 3001",
+    "energy:measure": "node tools/measure-energy.js http://localhost:3000/projects ./energy-reports",
+    "energy:compare": "node tools/compare-energy.js"
+  },
   "dependencies": {
     "react-router-dom": "^7.8.2"
+  },
+  "devDependencies": {
+    "chrome-launcher": "^1.2.1",
+    "json-server": "^0.17.3",
+    "lighthouse": "^12.8.2"
   }
 }

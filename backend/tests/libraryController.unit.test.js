@@ -9,6 +9,8 @@ jest.mock('dropbox', () => ({
 }));
 
 jest.mock('../models/libraryItemModel');
+// Mockeamos también Notification para evitar validaciones de mongoose en unit tests
+jest.mock('../models/notificationModel', () => ({ create: jest.fn().mockResolvedValue({}) }));
 const LibraryItem = require('../models/libraryItemModel');
 const controller = require('../controllers/libraryController');
 
@@ -20,15 +22,29 @@ describe('libraryController unit tests', () => {
 
   test('getLibraryItems - success with search', async () => {
   const fakeItems = [{ title: 'A' }, { title: 'B' }];
-  LibraryItem.find.mockImplementation(() => ({ sort: jest.fn().mockResolvedValue(fakeItems) }));
-    LibraryItem.countDocuments.mockResolvedValue(2);
+  // Mock que soporte la cadena .sort().skip().limit().select().lean().maxTimeMS()
+  LibraryItem.find.mockImplementation(() => ({
+    sort: () => ({
+      skip: () => ({
+        limit: () => ({
+          select: () => ({
+            lean: () => ({
+              maxTimeMS: () => Promise.resolve(fakeItems),
+            }),
+          }),
+        }),
+      }),
+    }),
+  }));
+    LibraryItem.countDocuments.mockImplementation(() => ({ maxTimeMS: () => Promise.resolve(2) }));
 
     const req = httpMocks.createRequest({ method: 'GET', user: { id: 'u1' }, query: { search: 'A' } });
     const res = httpMocks.createResponse();
     await controller.getLibraryItems(req, res);
     expect(res.statusCode).toBe(200);
     const data = res._getJSONData();
-    expect(Array.isArray(data)).toBe(true);
+    // El controlador devuelve { items, total, page, limit }
+    expect(Array.isArray(data.items)).toBe(true);
   });
 
   test('uploadLibraryItem - pdf success', async () => {

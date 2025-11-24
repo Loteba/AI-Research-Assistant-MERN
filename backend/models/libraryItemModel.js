@@ -43,4 +43,11 @@ libraryItemSchema.index(
     }
 );
 
+// Índices para búsquedas y orden por fechas
+libraryItemSchema.index({ user: 1, createdAt: -1 });
+libraryItemSchema.index({ user: 1, title: 1 });
+// Búsqueda textual básica sobre título y resumen
+// index de texto: incluir 'tags' también como campo textual (permite arrays)
+libraryItemSchema.index({ title: 'text', summary: 'text', tags: 'text' });
+
 module.exports = mongoose.model('LibraryItem', libraryItemSchema);

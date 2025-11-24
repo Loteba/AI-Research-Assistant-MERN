@@ -1,0 +1,68 @@
+{
+  "scenarios": [
+    {
+      "name": "GreenProjectList - Initial Visit",
+      "url": "http://localhost:3000/projects",
+      "actions": [
+        {
+          "type": "visit",
+          "url": "http://localhost:3000/projects"
+        },
+        {
+          "type": "wait",
+          "duration": 2000
+        }
+      ]
+    },
+    {
+      "name": "GreenProjectList - Expand Tasks",
+      "url": "http://localhost:3000/projects",
+      "actions": [
+        {
+          "type": "visit",
+          "url": "http://localhost:3000/projects"
+        },
+        {
+          "type": "wait",
+          "duration": 2000
+        },
+        {
+          "type": "click",
+          "selector": "button[aria-expanded='false']"
+        },
+        {
+          "type": "wait",
+          "duration": 1000
+        }
+      ]
+    },
+    {
+      "name": "GreenProjectList - Cache Hit (Reload)",
+      "url": "http://localhost:3000/projects",
+      "actions": [
+        {
+          "type": "visit",
+          "url": "http://localhost:3000/projects"
+        },
+        {
+          "type": "wait",
+          "duration": 2000
+        },
+        {
+          "type": "reload"
+        },
+        {
+          "type": "wait",
+          "duration": 2000
+        }
+      ]
+    }
+  ],
+  "thresholds": {
+    "energy": {
+      "browser": 0.05,
+      "screen": 0.02,
+      "network": 0.01
+    }
+  }
+}

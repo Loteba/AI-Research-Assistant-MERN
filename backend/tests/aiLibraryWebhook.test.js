@@ -99,8 +99,9 @@ describe('aiController & libraryController & webhook handling', () => {
     await libraryController.getLibraryItems(req, res);
     expect(res.statusCode).toBe(200);
     const data = res._getJSONData();
-    expect(Array.isArray(data)).toBe(true);
-    expect(data.length).toBeGreaterThan(0);
+    // El controlador devuelve un objeto con { items, total, page, limit }
+    expect(Array.isArray(data.items)).toBe(true);
+    expect(data.items.length).toBeGreaterThan(0);
   });
 
   it('deleteLibraryItem: no autorizado si otro usuario intenta borrar', async () => {
