@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test": "jest --coverage --runInBand",
+    "test:ci": "jest --coverage --runInBand",
+    "test:unit": "jest --runInBand --testPathPattern=tests",
+    "test:integration": "jest --runInBand --testPathPattern=tests.integration"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +31,21 @@
     "serpapi": "^2.2.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "jest": "^29.6.0",
+    "mongodb-memory-server": "^8.14.0",
+    "node-mocks-http": "^1.17.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 300000,
+    "coverageReporters": ["json", "lcov", "text", "text-summary"],
+    "coverageThreshold": {
+      "global": {
+        "lines": 70,
+        "statements": 70
+      }
+    }
   }
 }

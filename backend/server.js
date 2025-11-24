@@ -25,7 +25,11 @@ if (process.env.NODE_ENV === 'production') {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Servidor iniciado en el puerto ${PORT}`.cyan.underline));
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Servidor iniciado en el puerto ${PORT}`.cyan.underline));
+}
+
+module.exports = app;
 
 // --- logger simple de cada request ---
 app.use((req, res, next) => {

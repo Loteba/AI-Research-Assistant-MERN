@@ -1,0 +1,93 @@
+# Title: Create a New User
+# Description: This cURL command sends a POST request to the /api/users endpoint to create a new user. It includes a JSON payload with user details such as name, email, and password.
+curl -X POST http://localhost:5000/api/users \
+-H "Content-Type: application/json" \
+-d '{"name": "John Doe", "email": "john@example.com", "password": "password123"}'
+
+# Expected Response:
+# {
+#   "id": "12345",
+#   "name": "John Doe",
+#   "email": "john@example.com",
+#   "token": "abc123"
+# }
+
+# Title: Authenticate User
+# Description: This cURL command sends a POST request to the /api/users/login endpoint to authenticate a user. It includes a JSON payload with the user's email and password.
+curl -X POST http://localhost:5000/api/users/login \
+-H "Content-Type: application/json" \
+-d '{"email": "john@example.com", "password": "password123"}'
+
+# Expected Response:
+# {
+#   "id": "12345",
+#   "name": "John Doe",
+#   "email": "john@example.com",
+#   "token": "abc123"
+# }
+
+# Title: Fetch All Projects
+# Description: This cURL command sends a GET request to the /api/projects endpoint to retrieve a list of all projects. It requires a valid authorization token in the header.
+curl -X GET http://localhost:5000/api/projects \
+-H "Authorization: Bearer abc123"
+
+# Expected Response:
+# [
+#   {
+#     "id": "1",
+#     "name": "Project A",
+#     "description": "Description of Project A"
+#   },
+#   {
+#     "id": "2",
+#     "name": "Project B",
+#     "description": "Description of Project B"
+#   }
+# ]
+
+# Title: Add a New Project
+# Description: This cURL command sends a POST request to the /api/projects endpoint to add a new project. It includes a JSON payload with project details and requires an authorization token.
+curl -X POST http://localhost:5000/api/projects \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer abc123" \
+-d '{"name": "New Project", "description": "Details about the new project"}'
+
+# Expected Response:
+# {
+#   "id": "3",
+#   "name": "New Project",
+#   "description": "Details about the new project"
+# }
+
+# Title: Fetch AI Suggestions
+# Description: This cURL command sends a GET request to the /api/ai endpoint to retrieve AI-generated suggestions. It requires a valid authorization token in the header.
+curl -X GET http://localhost:5000/api/ai \
+-H "Authorization: Bearer abc123"
+
+# Expected Response:
+# {
+#   "suggestions": [
+#     "Suggestion 1",
+#     "Suggestion 2",
+#     "Suggestion 3"
+#   ]
+# }
+
+# Title: Fetch Library Resources
+# Description: This cURL command sends a GET request to the /api/library endpoint to retrieve a list of library resources. It requires a valid authorization token in the header.
+curl -X GET http://localhost:5000/api/library \
+-H "Authorization: Bearer abc123"
+
+# Expected Response:
+# [
+#   {
+#     "id": "101",
+#     "title": "Resource A",
+#     "type": "Book"
+#   },
+#   {
+#     "id": "102",
+#     "title": "Resource B",
+#     "type": "Article"
+#   }
+# ]
